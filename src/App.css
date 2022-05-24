@@ -1,0 +1,77 @@
+.App {
+  background-color: #d9dcdf;
+  height: 90ch;
+}
+
+.admin-menu{
+  background-color: rgb(193, 188, 196);
+  margin-top: 17%;
+  width: 100%;
+  padding: 0%;
+}
+
+.admin-menu .list-group{
+  background: none;
+  }
+.admin-menu .list-group .list-group-item{
+background: none;
+
+}
+.admin-menu .list-group .list-group-item a{
+ text-decoration: none;
+
+ color:rgb(62, 62, 60);
+}
+.admin-menu .list-group .list-group-item .active-menu{
+  /* text-decoration: underline; */
+  color:#2d242a;
+  font-weight: bold;
+ }
+
+ .container {
+   background-color: rgb(210, 204, 197);
+   width: auto;
+   height: 100px;
+ }
+
+ .table {
+   margin-top: 1%;
+ }
+
+ .breadcrum-custom ol{
+  background-color: rgb(240, 236, 243);
+  padding-left: .2rem  !important;
+  padding-top: .2rem  !important;
+  margin-bottom: 0 !important;
+  padding-bottom: .3rem;
+  border: 1px solid rgb(149, 112, 172);
+  border-radius:5px;
+  font-size: .85rem;
+}
+.breadcrum-custom a{
+  text-decoration: none !important;
+  color: rgb(14, 92, 247);
+}
+.breadcrum-custom a:hover{
+  text-decoration: underline !important; 
+}
+.breadcrum-custom a .activelink{
+  font-weight: bold;
+ 
+}
+
+.d-flex {
+  width: 40%;
+  margin: auto;
+}
+
+.nav-logo {
+  padding: 0%;
+  margin-left: 2%;
+}
+
+.thumbnail{
+  border: 1px solid black;
+  height: 220px;
+  width: 360px;
+}

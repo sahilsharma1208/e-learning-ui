@@ -1,0 +1,135 @@
+import React, { useEffect, useState} from 'react'
+import { faPlus, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { Row, Col, Button, Card, Form, FormControl } from 'react-bootstrap'
+import AdminMenu from '../ui/AdminMenu'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PageBreadcrum from '../ui/PageBreadCrum'
+import { Link } from 'react-router-dom'
+import { getQuestionBanks } from '../services/management.service'
+import DataTable from 'react-data-table-component'
+import ActionButtons from '../ui/ActionButtons'
+import "../ui/ui.module.css";
+
+export default function QuestionBankList(props) {
+    const [questions, setQuestions] = useState([])
+    const [column, setColumn] = useState([])
+    // const [q, setQ] = useState("")
+
+    useEffect(() => {
+        getQuestionBanks().then((response) => {
+            console.log(response);
+            setColumn([
+                {
+                    name: "S.No",
+                    selector: "id",
+                    sortable: true,
+                },
+                {
+                    name: "Name",
+                    selector: "name",
+                    sortable: true,
+                    right: true,
+                },
+                {
+                    name: "Language",
+                    selector: "language",
+                    sortable: true,
+                    right: true,
+                },
+                {
+                    name: "Number of Questions",
+                    selector: "numOfQuestions",
+                    sortable: true,
+                    right: true,
+                },
+                {
+                    name: "Mapping Name",
+                    selector: "mappingName",
+                    sortable: true,
+                    right: true,
+                },
+                {
+                    name: "Status",
+                    selector: "status",
+                    sortable: true,
+                    right: true,
+                },
+                {
+                    name: 'Actions',
+                    cell: (row) => <ActionButtons title="Edit" edit={{ link: '/question-bank', id: row.id }}  />
+                    
+                },
+            ]);
+            setQuestions(formatData(response));
+        });
+    }, []);
+
+    const formatData =(data) => {
+
+        return data.map(b=>{
+            return {
+                id: b.id,
+                name: b.name,
+                language: b.language,
+                numOfQuestions: b.numOfQuestions,
+                mappingName: b.mappingName,
+                status: b.status,
+            }
+        })
+    
+      }
+
+    //   function search(rows) {
+    //     return rows.filter((row) => row.loginName.toLowerCase().indexOf(q) > -1);
+    // }
+
+    const breadcrums = [
+
+        { link: "/home", label: "Home" },
+        { link: "/question-banks", label: "Question Bank", cssClass: "activelink" },
+    ]
+    return (
+        <>
+            <Row className="mt-2 mb-2">
+                <Col md={2}>
+                    <AdminMenu activelink="Question Bank" />
+                </Col>
+
+                <Col md={10}>
+                    <Card className='mt-5'>
+                        <Card.Body>
+                            <Row>
+                            <Form className="d-flex">
+                                <FormControl
+                                type="search"
+                                // value={q}
+                                // onChange={(e) => setQ(e.target.value)}
+                                placeholder="Search"
+                                style={{ width: "40%", marginLeft: "25%"}}
+                                className="me-2"
+                                aria-label="Search"
+                                />
+                                <Button variant="outline-success"><FontAwesomeIcon icon={faSearch}/></Button>
+                            </Form>
+                                <Col className='mt-2'>
+                                    <PageBreadcrum items={breadcrums} />
+                                    <h3 className='mt-4'>Question Bank Management</h3>
+                                </Col>
+                            </Row>
+                            <div>
+                                <Link eventKey={1} to="/question-bank/add-questionbank" className="btn btn-info no-border" >
+                                    Add Question Bank <FontAwesomeIcon icon={faPlus} /></Link>
+                            </div>
+                            <div className="table" style={{ backgroundColor: "whitesmoke" }}>
+                                <DataTable
+                                    columns={column}
+                                    data={questions}
+                                />
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </>
+    )
+}
